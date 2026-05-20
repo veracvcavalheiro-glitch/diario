@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MY NEW (V)ERA">
+<title>MY NEW (V)ERA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F8F6F1;
+    --card: #FFFFFF;
+    --text: #1A1917;
+    --muted: #9A9690;
+    --border: #E5E1D8;
+    --accent: #2C5F4A;
+    --accent-light: #EAF2EE;
+    --amber: #8B5E3C;
+    --amber-light: #FDF3EA;
+    --purple: #4A3F6B;
+    --purple-light: #F0EEFA;
+    --rose: #7A3F4E;
+    --rose-light: #FAF0F2;
+    --alert-bg: #FDF6E3;
+    --alert-text: #7A5C2E;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    max-width: 480px;
+    margin: 0 auto;
+    padding-bottom: 110px;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 56px 24px 16px;
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .app-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .app-title .v {
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .app-subtitle {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+
+  .date-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+  }
+
+  .export-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--muted);
+    cursor: pointer;
+    letter-spacing: 0.03em;
+  }
+
+  /* STATS */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 16px 24px;
+  }
+
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* NAV */
+  .nav {
+    display: flex;
+    padding: 0 24px 16px;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+
+  .nav-btn {
+    flex-shrink: 0;
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .nav-btn.ap { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+  .nav-btn.af { background: var(--amber-light); color: var(--amber); border-color: var(--amber); }
+  .nav-btn.an { background: var(--purple-light); color: var(--purple); border-color: var(--purple); }
+  .nav-btn.am { background: var(--rose-light); color: var(--rose); border-color: var(--rose); }
+
+  /* SECTIONS */
+  .section { display: none; padding: 0 24px; }
+  .section.active { display: block; }
+
+  /* ADD CARD */
+  .add-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .add-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .field-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    margin-bottom: 8px;
+    margin-top: 16px;
+  }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pill {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .pill.sp { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+  .pill.sf { background: var(--amber-light); color: var(--amber); border-color: var(--amber); }
+  .pill.sn { background: var(--purple-light); color: var(--purple); border-color: var(--purple); }
+  .pill.sm { background: var(--rose-light); color: var(--rose); border-color: var(--rose); }
+
+  /* STATUS */
+  .status-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .status-pill {
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .status-pill.sel-ns { background: #FEF3F2; color: #B42318; border-color: #FDA29B; }
+  .status-pill.sel-ip { background: #FFFAEB; color: #B54708; border-color: #FEC84B; }
+  .status-pill.sel-dn { background: #ECFDF3; color: #027A48; border-color: #6CE9A6; }
+
+  .alert-strip {
+    background: var(--alert-bg);
+    border-left: 3px solid #E5A847;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 10px 14px;
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--alert-text);
+    line-height: 1.6;
+  }
+
+  .alert-strip strong {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 3px;
+    opacity: 0.6;
+  }
+
+  textarea, .steps-input {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--bg);
+    resize: none;
+    line-height: 1.6;
+    margin-top: 0;
+    -webkit-appearance: none;
+  }
+
+  textarea:focus, .steps-input:focus { outline: none; border-color: var(--accent); }
+  textarea::placeholder, .steps-input::placeholder { color: var(--muted); }
+
+  .steps-list { margin-top: 8px; }
+
+  .step-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .step-row input {
+    flex: 1;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-appearance: none;
+  }
+
+  .step-row input:focus { outline: none; border-color: var(--accent); }
+  .step-row input::placeholder { color: var(--muted); }
+
+  .step-add-btn {
+    background: none;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-sm);
+    padding: 9px 13px;
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    margin-top: 4px;
+  }
+
+  .step-del {
+    background: none;
+    border: none;
+    color: var(--border);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+
+  .save-btn {
+    width: 100%;
+    padding: 15px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: var(--accent);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 16px;
+    letter-spacing: 0.02em;
+    transition: opacity 0.2s;
+  }
+  .save-btn:active { opacity: 0.8; }
+
+  /* ENTRIES */
+  .section-header {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .filter-pills {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    margin-bottom: 14px;
+  }
+  .filter-pills::-webkit-scrollbar { display: none; }
+
+  .filter-pill {
+    flex-shrink: 0;
+    padding: 5px 13px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+  }
+
+  .filter-pill.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+  .day-group { margin-bottom: 24px; }
+
+  .day-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .entry {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .entry-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    padding-right: 24px;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  .tag-p { background: var(--accent-light); color: var(--accent); }
+  .tag-f { background: var(--amber-light); color: var(--amber); }
+  .tag-n { background: var(--purple-light); color: var(--purple); }
+  .tag-m { background: var(--rose-light); color: var(--rose); }
+
+  .tag-ns { background: #FEF3F2; color: #B42318; }
+  .tag-ip { background: #FFFAEB; color: #B54708; }
+  .tag-dn { background: #ECFDF3; color: #027A48; }
+
+  .entry-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .entry-steps {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  .entry-steps-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .entry-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+
+  .entry-step::before {
+    content: '→';
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .entry-reflection {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    line-height: 1.6;
+  }
+
+  .entry-delete {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    color: var(--border);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 2px 4px;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--muted);
+  }
+
+  .empty-state p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    display: flex;
+    padding: 10px 0 28px;
+  }
+
+  .bnav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 0;
+  }
+
+  .bnav-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: all 0.2s;
+    margin-bottom: 2px;
+  }
+
+  .bnav-label {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+
+  .bnav-btn.active .bnav-dot { background: var(--accent); transform: scale(1.4); }
+  .bnav-btn.active .bnav-label { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-row">
+    <div>
+      <div class="app-title">MY NEW (<span class="v">V</span>)ERA</div>
+      <div class="app-subtitle">o diário da minha construção</div>
+    </div>
+    <div class="header-right">
+      <div class="date-label" id="today-label"></div>
+      <button class="export-btn" onclick="exportData()">exportar cópia</button>
+    </div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num" id="stat-total">0</div>
+    <div class="stat-label">avanços</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" id="stat-week">0</div>
+    <div class="stat-label">esta semana</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" id="stat-days">0</div>
+    <div class="stat-label">dias</div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn ap" onclick="switchSec('patrimonio',this)">Património</button>
+  <button class="nav-btn" onclick="switchSec('financeiro',this)">Financeiro</button>
+  <button class="nav-btn" onclick="switchSec('negocio',this)">Negócio</button>
+  <button class="nav-btn" onclick="switchSec('mindset',this)">Mindset & vida</button>
+</div>
+
+<!-- PATRIMÓNIO -->
+<div class="section active" id="sec-patrimonio">
+  <div class="add-card">
+    <div class="add-card-title">Registar avanço</div>
+
+    <div class="field-label">Imóvel</div>
+    <div class="pills" id="prop-pills">
+      <button class="pill" onclick="selProp(this,'consolacao')">Consolação</button>
+      <button class="pill" onclick="selProp(this,'lisboa')">Lisboa</button>
+      <button class="pill" onclick="selProp(this,'sobral')">Sobral</button>
+    </div>
+
+    <div id="sub-pat-area" style="display:none;">
+      <div class="field-label">Subtema</div>
+      <div class="pills" id="sub-pat-pills"></div>
+    </div>
+
+    <div id="alert-pat"></div>
+
+    <div class="field-label" style="margin-top:16px;">Estado</div>
+    <div class="status-pills" id="status-pat">
+      <button class="status-pill" onclick="selStatus(this,'pat','ns')">Não iniciado</button>
+      <button class="status-pill" onclick="selStatus(this,'pat','ip')">Em curso</button>
+      <button class="status-pill" onclick="selStatus(this,'pat','dn')">Concluído</button>
+    </div>
+
+    <div class="field-label" style="margin-top:16px;">O que avancei</div>
+    <textarea id="text-pat" rows="3" placeholder="O que fiz, decidi ou desbloqueei..."></textarea>
+
+    <div class="field-label">Próximos passos</div>
+    <div class="steps-list" id="steps-pat"></div>
+    <button class="step-add-btn" onclick="addStep('pat')">+ adicionar passo</button>
+
+    <button class="save-btn" onclick="addEntry('patrimonio')">Guardar</button>
+  </div>
+
+  <div class="section-header">Registos</div>
+  <div class="filter-pills" id="filter-pat">
+    <button class="filter-pill active" onclick="filterEnt('patrimonio',this,'todos')">Todos</button>
+    <button class="filter-pill" onclick="filterEnt('patrimonio',this,'consolacao')">Consolação</button>
+    <button class="filter-pill" onclick="filterEnt('patrimonio',this,'lisboa')">Lisboa</button>
+    <button class="filter-pill" onclick="filterEnt('patrimonio',this,'sobral')">Sobral</button>
+  </div>
+  <div id="list-patrimonio"></div>
+</div>
+
+<!-- FINANCEIRO -->
+<div class="section" id="sec-financeiro">
+  <div class="add-card">
+    <div class="add-card-title">Registar avanço</div>
+
+    <div class="field-label">Subtema</div>
+    <div class="pills">
+      <button class="pill" onclick="selSub(this,'fin','subsidio')">Subsídio</button>
+      <button class="pill" onclick="selSub(this,'fin','poupanca')">Poupança</button>
+      <button class="pill" onclick="selSub(this,'fin','investimentos')">Investimentos</button>
+      <button class="pill" onclick="selSub(this,'fin','gastos-fixos')">Gastos fixos</button>
+      <button class="pill" onclick="selSub(this,'fin','outras-fontes')">Outras fontes</button>
+    </div>
+
+    <div id="alert-fin"></div>
+
+    <div class="field-label" style="margin-top:16px;">Estado</div>
+    <div class="status-pills" id="status-fin">
+      <button class="status-pill" onclick="selStatus(this,'fin','ns')">Não iniciado</button>
+      <button class="status-pill" onclick="selStatus(this,'fin','ip')">Em curso</button>
+      <button class="status-pill" onclick="selStatus(this,'fin','dn')">Concluído</button>
+    </div>
+
+    <div class="field-label" style="margin-top:16px;">O que avancei</div>
+    <textarea id="text-fin" rows="3" placeholder="O que fiz, decidi ou desbloqueei..."></textarea>
+
+    <div class="field-label">Próximos passos</div>
+    <div class="steps-list" id="steps-fin"></div>
+    <button class="step-add-btn" onclick="addStep('fin')">+ adicionar passo</button>
+
+    <button class="save-btn" style="background:var(--amber);" onclick="addEntry('financeiro')">Guardar</button>
+  </div>
+
+  <div class="section-header">Registos</div>
+  <div id="list-financeiro"></div>
+</div>
+
+<!-- NEGÓCIO -->
+<div class="section" id="sec-negocio">
+  <div class="add-card">
+    <div class="add-card-title">Registar avanço</div>
+
+    <div class="field-label">Subtema</div>
+    <div class="pills">
+      <button class="pill" onclick="selSub(this,'neg','outsourcing')">Outsourcing</button>
+      <button class="pill" onclick="selSub(this,'neg','clientes')">Clientes</button>
+      <button class="pill" onclick="selSub(this,'neg','parcerias')">Parcerias</button>
+      <button class="pill" onclick="selSub(this,'neg','plano-negocios')">Plano de negócios</button>
+      <button class="pill" onclick="selSub(this,'neg','networking')">Networking</button>
+      <button class="pill" onclick="selSub(this,'neg','marketing')">Marketing</button>
+      <button class="pill" onclick="selSub(this,'neg','formacao')">Formação & IA</button>
+    </div>
+
+    <div id="alert-neg"></div>
+
+    <div class="field-label" style="margin-top:16px;">Estado</div>
+    <div class="status-pills" id="status-neg">
+      <button class="status-pill" onclick="selStatus(this,'neg','ns')">Não iniciado</button>
+      <button class="status-pill" onclick="selStatus(this,'neg','ip')">Em curso</button>
+      <button class="status-pill" onclick="selStatus(this,'neg','dn')">Concluído</button>
+    </div>
+
+    <div class="field-label" style="margin-top:16px;">O que avancei</div>
+    <textarea id="text-neg" rows="3" placeholder="O que fiz, decidi ou desbloqueei..."></textarea>
+
+    <div class="field-label">Próximos passos</div>
+    <div class="steps-list" id="steps-neg"></div>
+    <button class="step-add-btn" onclick="addStep('neg')">+ adicionar passo</button>
+
+    <button class="save-btn" style="background:var(--purple);" onclick="addEntry('negocio')">Guardar</button>
+  </div>
+
+  <div class="section-header">Registos</div>
+  <div id="list-negocio"></div>
+</div>
+
+<!-- MINDSET & VIDA -->
+<div class="section" id="sec-mindset">
+  <div class="add-card">
+    <div class="add-card-title">Registar avanço</div>
+
+    <div class="field-label">Subtema</div>
+    <div class="pills">
+      <button class="pill" onclick="selSub(this,'mind','transicao')">Transição</button>
+      <button class="pill" onclick="selSub(this,'mind','paradigma')">Paradigma</button>
+      <button class="pill" onclick="selSub(this,'mind','eu-no-centro')">Eu no centro</button>
+      <button class="pill" onclick="selSub(this,'mind','socializacao')">Socialização</button>
+      <button class="pill" onclick="selSub(this,'mind','consolacao-pai')">Consolação & pai</button>
+      <button class="pill" onclick="selSub(this,'mind','lisboa-ritmo')">Lisboa & ritmo</button>
+    </div>
+
+    <div id="alert-mind"></div>
+
+    <div class="field-label" style="margin-top:16px;">Estado</div>
+    <div class="status-pills" id="status-mind">
+      <button class="status-pill" onclick="selStatus(this,'mind','ns')">Não iniciado</button>
+      <button class="status-pill" onclick="selStatus(this,'mind','ip')">Em curso</button>
+      <button class="status-pill" onclick="selStatus(this,'mind','dn')">Concluído</button>
+    </div>
+
+    <div class="field-label" style="margin-top:16px;">O que avancei ou senti</div>
+    <textarea id="text-mind" rows="3" placeholder="O que fiz, senti ou percebi..."></textarea>
+
+    <div class="field-label">Próximos passos</div>
+    <div class="steps-list" id="steps-mind"></div>
+    <button class="step-add-btn" onclick="addStep('mind')">+ adicionar passo</button>
+
+    <div class="field-label">Como estou hoje</div>
+    <textarea id="reflection-mind" rows="2" placeholder="Uma frase honesta..."></textarea>
+
+    <button class="save-btn" style="background:var(--rose);" onclick="addEntry('mindset')">Guardar</button>
+  </div>
+
+  <div class="section-header">Registos</div>
+  <div id="list-mindset"></div>
+</div>
+
+<div class="bottom-nav">
+  <button class="bnav-btn active" onclick="switchSec('patrimonio',null,this)">
+    <div class="bnav-dot"></div>
+    <div class="bnav-label">Património</div>
+  </button>
+  <button class="bnav-btn" onclick="switchSec('financeiro',null,this)">
+    <div class="bnav-dot"></div>
+    <div class="bnav-label">Financeiro</div>
+  </button>
+  <button class="bnav-btn" onclick="switchSec('negocio',null,this)">
+    <div class="bnav-dot"></div>
+    <div class="bnav-label">Negócio</div>
+  </button>
+  <button class="bnav-btn" onclick="switchSec('mindset',null,this)">
+    <div class="bnav-dot"></div>
+    <div class="bnav-label">Mindset</div>
+  </button>
+</div>
+
+<script>
+const PROPS = {
+  consolacao: {
+    subs: ['obra + decoração','electrodomésticos','contactar potencial inquilino','arrendamento'],
+    alerts: ['O óptimo é inimigo do bom — decidir e avançar.','Perfeccionismo adia o término. Uma decisão boa agora vale mais que uma decisão perfeita tarde.']
+  },
+  lisboa: {
+    subs: ['desenvolver projeto','orçamentos','WC + cozinha','privacidade sala/quarto','preparar quarto','WC principal','janelas'],
+    alerts: ['O óptimo é inimigo do bom.','O projeto em desenvolvimento não é desculpa para não avançar.']
+  },
+  sobral: {
+    subs: ['casa principal — manutenção','casa da avó','partilhas com a irmã','adega','actividade agrícola'],
+    alerts: ['Partilhas: não deixar arrastar. Cabe a si colocar as possibilidades na mesa.','A urgência é assimétrica — o seu futuro depende mais destas decisões do que o da sua irmã.']
+  }
+};
+
+const ALERTS = {
+  fin: {
+    subsidio: ['Acompanhar activamente — não esperar passivamente.'],
+    poupanca: ['Esta reserva é para as obras, não para o quotidiano.'],
+    investimentos: ['Decisões de investimento não precisam de ser perfeitas, precisam de ser feitas.'],
+    'gastos-fixos': ['Pequenas despesas fixas somam muito — vale a pena rever uma a uma.'],
+    'outras-fontes': ['Pensar fora do arquitecto e do senhorio — o que mais posso oferecer?']
+  },
+  neg: {
+    'plano-negocios': ['Plano por terminar não paralisa as outras frentes — avançar em paralelo.'],
+    networking: ['Networking tem custo zero. Pode começar hoje.'],
+    marketing: ['Visibilidade não é vaidade — é construção.'],
+    formacao: ['Formação é investimento, mas também pode ser fuga. Atenção ao equilíbrio.']
+  },
+  mind: {
+    transicao: ['Poucos avanços visíveis fazem parte do processo. Não são falha.','A frustração é sinal de que está a mudar, não de que está a falhar.'],
+    socializacao: ['Socializar é urgente. Não esperar por "estar melhor" para o fazer.','O isolamento alimenta o medo.'],
+    'consolacao-pai': ['Conforto com o pai é legítimo e é também uma armadilha — as duas coisas ao mesmo tempo.','Quando estiver na Consolação, cumprir o propósito de mudança — não só gerir obras.'],
+    'eu-no-centro': ['Cuidar de si não é egoísmo. É o centro do plano.'],
+    paradigma: ['Perceber não chega — tem que sentir. Registe mesmo os pequenos passos.'],
+    'lisboa-ritmo': ['Idas a Lisboa são uma necessidade, não uma interrupção. Marcar activamente.']
+  }
+};
+
+const STATUS_LABEL = { ns: 'Não iniciado', ip: 'Em curso', dn: 'Concluído' };
+const CAP_CLS = { patrimonio:'p', financeiro:'f', negocio:'n', mindset:'m' };
+const CAP_LABEL = { patrimonio:'Património', financeiro:'Financeiro', negocio:'Negócio', mindset:'Mindset & vida' };
+
+let state = {
+  prop: null,
+  sub: {},
+  status: {},
+  steps: { pat:[], fin:[], neg:[], mind:[] },
+  filter: { patrimonio:'todos' }
+};
+
+let entries = [];
+try { const s = localStorage.getItem('mynewvera'); if(s) entries = JSON.parse(s); } catch(e){}
+
+function save() { try { localStorage.setItem('mynewvera', JSON.stringify(entries)); } catch(e){} }
+
+function selProp(btn, prop) {
+  state.prop = prop;
+  state.sub.patrimonio = null;
+  document.querySelectorAll('#prop-pills .pill').forEach(b => b.className = 'pill');
+  btn.className = 'pill sp';
+
+  const d = PROPS[prop];
+  document.getElementById('sub-pat-pills').innerHTML = d.subs.map(s =>
+    `<button class="pill" onclick="selSubPat(this,'${s}')">${s}</button>`
+  ).join('');
+  document.getElementById('sub-pat-area').style.display = 'block';
+  document.getElementById('alert-pat').innerHTML = d.alerts.map(a =>
+    `<div class="alert-strip"><strong>lembrar</strong>${a}</div>`
+  ).join('');
+}
+
+function selSubPat(btn, sub) {
+  state.sub.patrimonio = sub;
+  document.querySelectorAll('#sub-pat-pills .pill').forEach(b => b.className = 'pill');
+  btn.className = 'pill sp';
+}
+
+function selSub(btn, cap, sub) {
+  state.sub[cap] = sub;
+  btn.closest('.pills').querySelectorAll('.pill').forEach(b => b.className = 'pill');
+  const cls = {fin:'sf',neg:'sn',mind:'sm'}[cap];
+  btn.className = `pill ${cls}`;
+
+  const al = ALERTS[cap] && ALERTS[cap][sub] ? ALERTS[cap][sub] : [];
+  const alertEl = document.getElementById(`alert-${cap}`);
+  if(alertEl) alertEl.innerHTML = al.map(a => `<div class="alert-strip"><strong>lembrar</strong>${a}</div>`).join('');
+}
+
+function selStatus(btn, cap, val) {
+  state.status[cap] = val;
+  document.getElementById(`status-${cap}`).querySelectorAll('.status-pill').forEach(b => {
+    b.className = 'status-pill';
+  });
+  btn.className = `status-pill sel-${val}`;
+}
+
+function addStep(cap) {
+  state.steps[cap].push('');
+  renderSteps(cap);
+}
+
+function removeStep(cap, i) {
+  state.steps[cap].splice(i, 1);
+  renderSteps(cap);
+}
+
+function renderSteps(cap) {
+  const el = document.getElementById(`steps-${cap}`);
+  el.innerHTML = state.steps[cap].map((s, i) => `
+    <div class="step-row">
+      <input type="text" placeholder="próximo passo ${i+1}..." value="${s}"
+        oninput="state.steps['${cap}'][${i}]=this.value" />
+      <button class="step-del" onclick="removeStep('${cap}',${i})">×</button>
+    </div>
+  `).join('');
+}
+
+function addEntry(cap) {
+  const idMap = { patrimonio:'pat', financeiro:'fin', negocio:'neg', mindset:'mind' };
+  const id = idMap[cap];
+  const text = document.getElementById(`text-${id}`).value.trim();
+  if(!text) return;
+
+  const steps = state.steps[id].filter(s => s.trim());
+  const reflection = cap === 'mindset' ? document.getElementById('reflection-mind').value.trim() : '';
+
+  entries.unshift({
+    id: Date.now(),
+    date: new Date().toISOString(),
+    cap,
+    prop: cap === 'patrimonio' ? state.prop : null,
+    sub: state.sub[cap] || null,
+    status: state.status[cap] || null,
+    text,
+    steps,
+    reflection
+  });
+
+  save();
+
+  // Reset
+  document.getElementById(`text-${id}`).value = '';
+  if(cap === 'mindset') document.getElementById('reflection-mind').value = '';
+  state.sub[cap] = null;
+  state.status[cap] = null;
+  state.steps[id] = [];
+  renderSteps(id);
+  document.getElementById(`status-${id}`).querySelectorAll('.status-pill').forEach(b => b.className = 'status-pill');
+  btn_reset(id);
+
+  if(cap === 'patrimonio') {
+    state.prop = null;
+    document.getElementById('sub-pat-area').style.display = 'none';
+    document.getElementById('alert-pat').innerHTML = '';
+    document.querySelectorAll('#prop-pills .pill').forEach(b => b.className = 'pill');
+  }
+
+  renderAll();
+}
+
+function btn_reset(id) {
+  const sec = document.getElementById(`sec-${id === 'pat' ? 'patrimonio' : id === 'fin' ? 'financeiro' : id === 'neg' ? 'negocio' : 'mindset'}`);
+  sec.querySelectorAll('.pills .pill').forEach(b => {
+    b.className = 'pill';
+  });
+  const alertEl = document.getElementById(`alert-${id}`);
+  if(alertEl) alertEl.innerHTML = '';
+}
+
+function deleteEntry(id) {
+  entries = entries.filter(e => e.id !== id);
+  save();
+  renderAll();
+}
+
+function filterEnt(cap, btn, val) {
+  state.filter[cap] = val;
+  btn.closest('.filter-pills').querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderList(cap);
+}
+
+function formatDay(iso) {
+  return new Date(iso).toLocaleDateString('pt-PT', {weekday:'long', day:'numeric', month:'long'});
+}
+
+function thisWeek() {
+  const now = new Date(), s = new Date(now);
+  s.setDate(now.getDate() - now.getDay()); s.setHours(0,0,0,0);
+  return entries.filter(e => new Date(e.date) >= s).length;
+}
+
+function uniqueDays() { return new Set(entries.map(e => new Date(e.date).toDateString())).size; }
+
+function renderList(cap) {
+  const filter = state.filter[cap] || 'todos';
+  let filtered = entries.filter(e => e.cap === cap);
+  if(filter !== 'todos') filtered = filtered.filter(e => e.prop === filter || e.sub === filter);
+
+  const el = document.getElementById(`list-${cap}`);
+  if(!filtered.length) {
+    el.innerHTML = `<div class="empty-state"><p>A construção começa com o primeiro registo.</p></div>`;
+    return;
+  }
+
+  const groups = {};
+  filtered.forEach(e => {
+    const k = new Date(e.date).toDateString();
+    if(!groups[k]) groups[k] = { label: formatDay(e.date), items:[] };
+    groups[k].items.push(e);
+  });
+
+  const cls = CAP_CLS[cap];
+  el.innerHTML = Object.values(groups).map(g => `
+    <div class="day-group">
+      <div class="day-label">${g.label}</div>
+      ${g.items.map(e => `
+        <div class="entry">
+          <button class="entry-delete" onclick="deleteEntry(${e.id})" aria-label="apagar">×</button>
+          <div class="entry-tags">
+            <span class="tag tag-${cls}">${CAP_LABEL[e.cap]}</span>
+            ${e.prop ? `<span class="tag tag-${cls}" style="opacity:.7">${e.prop}</span>` : ''}
+            ${e.sub ? `<span class="tag tag-${cls}" style="opacity:.7">${e.sub}</span>` : ''}
+            ${e.status ? `<span class="tag tag-${e.status}">${STATUS_LABEL[e.status]}</span>` : ''}
+          </div>
+          <div class="entry-text">${e.text}</div>
+          ${e.steps && e.steps.length ? `
+            <div class="entry-steps">
+              <div class="entry-steps-label">próximos passos</div>
+              ${e.steps.map(s => `<div class="entry-step">${s}</div>`).join('')}
+            </div>` : ''}
+          ${e.reflection ? `<div class="entry-reflection">${e.reflection}</div>` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function renderAll() {
+  document.getElementById('stat-total').textContent = entries.length;
+  document.getElementById('stat-week').textContent = thisWeek();
+  document.getElementById('stat-days').textContent = uniqueDays();
+  ['patrimonio','financeiro','negocio','mindset'].forEach(renderList);
+}
+
+let currentSec = 'patrimonio';
+
+function switchSec(cap, navBtn, bnavBtn) {
+  currentSec = cap;
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(`sec-${cap}`).classList.add('active');
+
+  if(navBtn) {
+    document.querySelectorAll('.nav-btn').forEach(b => b.className = 'nav-btn');
+    const cls = {patrimonio:'ap',financeiro:'af',negocio:'an',mindset:'am'}[cap];
+    navBtn.className = `nav-btn ${cls}`;
+  }
+
+  document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+  if(bnavBtn) {
+    bnavBtn.classList.add('active');
+  } else {
+    const bbtns = document.querySelectorAll('.bnav-btn');
+    const idx = {patrimonio:0,financeiro:1,negocio:2,mindset:3}[cap];
+    bbtns[idx].classList.add('active');
+    document.querySelectorAll('.nav-btn')[idx].className = `nav-btn ${['ap','af','an','am'][idx]}`;
+    document.querySelectorAll('.nav-btn').forEach((b,i) => { if(i!==idx) b.className='nav-btn'; });
+  }
+}
+
+function exportData() {
+  let txt = 'MY NEW (V)ERA — diário de construção\n';
+  txt += new Date().toLocaleDateString('pt-PT', {day:'numeric',month:'long',year:'numeric'}) + '\n\n';
+  entries.forEach(e => {
+    txt += `— ${new Date(e.date).toLocaleDateString('pt-PT')} | ${CAP_LABEL[e.cap]}`;
+    if(e.prop) txt += ` > ${e.prop}`;
+    if(e.sub) txt += ` > ${e.sub}`;
+    if(e.status) txt += ` [${STATUS_LABEL[e.status]}]`;
+    txt += `\n${e.text}`;
+    if(e.steps && e.steps.length) txt += '\nPróximos passos:\n' + e.steps.map(s=>`→ ${s}`).join('\n');
+    if(e.reflection) txt += `\nComo estou: ${e.reflection}`;
+    txt += '\n\n';
+  });
+  const a = document.createElement('a');
+  a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
+  a.download = 'mynewvera_' + new Date().toISOString().slice(0,10) + '.txt';
+  a.click();
+}
+
+document.getElementById('today-label').textContent = new Date().toLocaleDateString('pt-PT', {weekday:'long', day:'numeric', month:'long'});
+
+renderAll();
+</script>
+</body>
+</html>
